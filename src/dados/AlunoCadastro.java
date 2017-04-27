@@ -8,23 +8,21 @@ package dados;
  *
  */
 public class AlunoCadastro {
-	
-	private static boolean fezCursoUtd;
-	private static String nomeAluno;
-	private static String cpfAluno;
-	private static String sexoAluno;
-	private static String dataNasc;
-	private static String estadoCivil;
-	private static String endereco;
-	private static String bairro;
-	private static String cidade;
-	private static String telefone;
-
-	private static String curso;
-	private static String turma;
-	private static int quantosCursos;
-	private static String quaisCursos;
-	private static String quandoFez;
+	private boolean fezCursoUtd;
+	private String nomeAluno;
+	private String cpfAluno;
+	private String sexoAluno;
+	private String dataNasc;
+	private String estadoCivil;
+	private String endereco;
+	private String bairro;
+	private String cidade;
+	private String telefone;
+	private String curso;
+	private String turma;
+	private int quantosCursos;
+	private String quaisCursos;
+	private String quandoFez;
 
 	/**
 	 * 
@@ -45,7 +43,137 @@ public class AlunoCadastro {
 		this.quantosCursos = quantosCursos;
 		this.quaisCursos = quaisCursos;
 		this.quandoFez = quandoFez;
+		this.SalvaAluno();
 	}
 	
+	private void SalvaAluno(){
+		
+	}
+	public boolean existeAluno(String cpf){
+		return false;
+	}
+
+	public boolean isFezCursoUtd() {
+		return this.fezCursoUtd;
+	}
+
+	public void setFezCursoUtd(boolean fezCursoUtd) {
+		this.fezCursoUtd = fezCursoUtd;
+	}
+
+	public String getNomeAluno() {
+		return this.nomeAluno;
+	}
+
+	public void setNomeAluno(String nomeAluno) {
+		this.nomeAluno = nomeAluno;
+	}
+
+	public String getCpfAluno() {
+		return this.cpfAluno;
+	}
+
+	public void setCpfAluno(String cpfAluno) {
+		this.cpfAluno = cpfAluno;
+	}
+
+	public String getSexoAluno() {
+		return this.sexoAluno;
+	}
+
+	public void setSexoAluno(String sexoAluno) {
+		this.sexoAluno = sexoAluno;
+	}
+
+	public String getDataNasc() {
+		return this.dataNasc;
+	}
+
+	public void setDataNasc(String dataNasc) {
+		this.dataNasc = dataNasc;
+	}
+
+	public String getEstadoCivil() {
+		return this.estadoCivil;
+	}
+
+	public void setEstadoCivil(String estadoCivil) {
+		this.estadoCivil = estadoCivil;
+	}
+
+	public String getEndereco() {
+		return this.endereco;
+	}
+
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
+	}
+
+	public String getBairro() {
+		return this.bairro;
+	}
+
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
+
+	public String getCidade() {
+		return this.cidade;
+	}
+
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+
+	public String getTelefone() {
+		return this.telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public String getCurso() {
+		return this.curso;
+	}
+
+	public void setCurso(String curso) {
+		this.curso = curso;
+	}
+
+	public String getTurma() {
+		return this.turma;
+	}
+
+	public void setTurma(String turma) {
+		this.turma = turma;
+	}
+
+	public int getQuantosCursos() {
+		return this.quantosCursos;
+	}
+
+	public void setQuantosCursos(int quantosCursos) {
+		this.quantosCursos = quantosCursos;
+	}
+
+	public String getQuaisCursos() {
+		return this.quaisCursos;
+	}
+
+	public void setQuaisCursos(String quaisCursos) {
+		this.quaisCursos = quaisCursos;
+	}
+
+	public String getQuandoFez() {
+		return this.quandoFez;
+	}
+
+	public void setQuandoFez(String quandoFez) {
+		this.quandoFez = quandoFez;
+	}
+
+	
+
 
 }
