@@ -3,6 +3,12 @@
  */
 package dados;
 
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+
 /**
  * @author jcleilton
  *
@@ -43,14 +49,56 @@ public class AlunoCadastro {
 		this.quantosCursos = quantosCursos;
 		this.quaisCursos = quaisCursos;
 		this.quandoFez = quandoFez;
-		this.SalvaAluno();
+		try {
+			this.salvaAluno();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Erro ao salvar aluno "+this.nomeAluno+"!\n"+e);
+		}
 	}
 	
-	private void SalvaAluno(){
-		
+	private void salvaAluno() throws IOException{
+		OutputStream os = new FileOutputStream(this.cpfAluno+".txt");
+		OutputStreamWriter osw = new OutputStreamWriter(os);
+		BufferedWriter bw = new BufferedWriter(osw);
+		bw.write(this.nomeAluno);
+		bw.newLine();
+		bw.write(this.cpfAluno);
+		bw.newLine();
+		bw.write(this.sexoAluno);
+		bw.newLine();
+		bw.write(this.dataNasc);
+		bw.newLine();
+		bw.write(this.estadoCivil);
+		bw.newLine();
+		bw.write(this.endereco);
+		bw.newLine();
+		bw.write(this.bairro);
+		bw.newLine();
+		bw.write(this.cidade);
+		bw.newLine();
+		bw.write(this.telefone);
+		bw.newLine();
+		bw.write(this.curso);
+		bw.newLine();
+		bw.write(this.turma);
+		bw.newLine();
+		bw.write(""+this.quantosCursos);
+		bw.newLine();
+		bw.write(this.quandoFez);
+		bw.newLine();
+		bw.write("Fez Curso UTD? - "+this.fezCursoUtd);
+		bw.close();
 	}
 	public boolean existeAluno(String cpf){
+		
 		return false;
+	}
+	
+	public AlunoCadastro consultaAluno(String cpf){
+		
+		return null;
 	}
 
 	public boolean isFezCursoUtd() {
