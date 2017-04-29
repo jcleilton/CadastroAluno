@@ -3,9 +3,13 @@
  */
 package dados;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
@@ -33,6 +37,11 @@ public class AlunoCadastro {
 	/**
 	 * 
 	 */
+	
+	public AlunoCadastro(){
+		
+	}
+	
 	public AlunoCadastro(boolean fezCursoUtd,String nomeAluno,String cpfAluno,String sexoAluno,String dataNasc,String estadoCivil,String endereco,String bairro,String cidade,String telefone,String curso,String turma,int quantosCursos, String quaisCursos,String quandoFez) {
 		this.fezCursoUtd = fezCursoUtd;
 		this.nomeAluno = nomeAluno;
@@ -47,8 +56,8 @@ public class AlunoCadastro {
 		this.curso = curso;
 		this.turma = turma;
 		this.quantosCursos = quantosCursos;
-		this.quaisCursos = quaisCursos;
-		this.quandoFez = quandoFez;
+		this.quaisCursos = ""+quaisCursos;
+		this.quandoFez = ""+quandoFez;
 		try {
 			this.salvaAluno();
 		} catch (IOException e) {
@@ -62,6 +71,8 @@ public class AlunoCadastro {
 		OutputStream os = new FileOutputStream(this.cpfAluno+".txt");
 		OutputStreamWriter osw = new OutputStreamWriter(os);
 		BufferedWriter bw = new BufferedWriter(osw);
+		bw.write(""+this.fezCursoUtd);
+		bw.newLine();
 		bw.write(this.nomeAluno);
 		bw.newLine();
 		bw.write(this.cpfAluno);
@@ -88,12 +99,35 @@ public class AlunoCadastro {
 		bw.newLine();
 		bw.write(this.quandoFez);
 		bw.newLine();
-		bw.write("Fez Curso UTD? - "+this.fezCursoUtd);
 		bw.close();
 	}
 	public boolean existeAluno(String cpf){
-		
-		return false;
+		try{
+			InputStream is = new FileInputStream(cpf+".txt");
+			InputStreamReader isr = new InputStreamReader(is);
+			BufferedReader br = new BufferedReader(isr);
+			AlunoCadastro alunoExistente = new AlunoCadastro();
+			alunoExistente.setFezCursoUtd(Boolean.parseBoolean(br.readLine()));
+			alunoExistente.setNomeAluno(br.readLine());
+			alunoExistente.setCpfAluno(br.readLine());
+			alunoExistente.setSexoAluno(br.readLine());
+			alunoExistente.setDataNasc(br.readLine());
+			alunoExistente.setEstadoCivil(br.readLine());
+			alunoExistente.setEndereco(br.readLine());
+			alunoExistente.setBairro(br.readLine());
+			alunoExistente.setCidade(br.readLine());
+			alunoExistente.setTelefone(br.readLine());
+			alunoExistente.setCurso(br.readLine());
+			alunoExistente.setTurma(br.readLine());
+			alunoExistente.setQuantosCursos(Integer.parseInt(br.readLine()));
+			alunoExistente.setQuandoFez(br.readLine());
+			alunoExistente.setQuaisCursos(br.readLine());
+			br.close();
+			System.out.println(alunoExistente);
+			return true;
+		}catch (Exception e){
+			return false;
+		}
 	}
 	
 	public AlunoCadastro consultaAluno(String cpf){
@@ -219,6 +253,15 @@ public class AlunoCadastro {
 
 	public void setQuandoFez(String quandoFez) {
 		this.quandoFez = quandoFez;
+	}
+
+	@Override
+	public String toString() {
+		return "AlunoCadastro [fezCursoUtd=" + fezCursoUtd + ", nomeAluno=" + nomeAluno + ", cpfAluno=" + cpfAluno
+				+ ", sexoAluno=" + sexoAluno + ", dataNasc=" + dataNasc + ", estadoCivil=" + estadoCivil + ", endereco="
+				+ endereco + ", bairro=" + bairro + ", cidade=" + cidade + ", telefone=" + telefone + ", curso=" + curso
+				+ ", turma=" + turma + ", quantosCursos=" + quantosCursos + ", quaisCursos=" + quaisCursos
+				+ ", quandoFez=" + quandoFez + "]";
 	}
 
 	
