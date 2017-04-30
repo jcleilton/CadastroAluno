@@ -130,8 +130,20 @@ public class AlunoCadastro {
 		}
 	}
 	
-	public AlunoCadastro consultaAluno(String cpf){
-		
+	public AlunoCadastro recuperaAluno(String cpf){
+		if (this.existeAluno(cpf)){
+			try{
+				InputStream is = new FileInputStream(cpf+".txt");
+				InputStreamReader isr = new InputStreamReader(is);
+				BufferedReader br = new BufferedReader(isr);
+				AlunoCadastro alunoExistente = new AlunoCadastro(Boolean.parseBoolean(br.readLine()),br.readLine(),br.readLine(),br.readLine(),br.readLine(),br.readLine(),br.readLine(),br.readLine(),br.readLine(),br.readLine(),br.readLine(),br.readLine(),Integer.parseInt(br.readLine()),br.readLine(),br.readLine());
+				br.close();
+				return alunoExistente;
+			}catch (IOException e){
+				System.out.println("Erro: "+e);
+				return null;
+			}
+		}
 		return null;
 	}
 
