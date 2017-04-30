@@ -15,6 +15,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import dados.AlunoCadastro;
+
 public class Form{
 
 	private static boolean fezCursoUtd;
@@ -197,6 +199,15 @@ public class Form{
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null, "Operação cancelada pelo usuário!", "Cancelar", 0);
 				frame.dispose();
+			}
+		});
+		
+		JButton button3 = new JButton("Consultar");
+		button3.setBounds(200, 100, 400, 300);
+		button3.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				consultarAluno();
 			}
 		});
 
@@ -396,17 +407,23 @@ public class Form{
 		c.gridy = 14;
 		panel.add(textFieldQuando,c);
 
-		c.gridx = 2;
+		c.gridx = 1;
 		c.weighty = 0;
 		c.gridwidth = 1;
 		c.gridy = 15;
 		panel.add(button1,c);
 
-		c.gridx = 3;
+		c.gridx = 2;
 		c.weighty = 0;
 		c.gridwidth = 1;
 		c.gridy = 15;
 		panel.add(button2,c);
+		
+		c.gridx = 3;
+		c.weighty = 0;
+		c.gridwidth = 1;
+		c.gridy = 15;
+		panel.add(button3,c);
 
 		frame.setContentPane(panel);
 		frame.setVisible(true);
@@ -434,6 +451,16 @@ public class Form{
 			@SuppressWarnings("unused")
 			dados.AlunoCadastro aluno = new dados.AlunoCadastro(fezCursoUtd, nomeAluno, cpfAluno, sexoAluno, dataNasc, estadoCivil, endereco, bairro, cidade, telefone, curso, turma, 0, "", "");
 			JOptionPane.showMessageDialog(null, "Aluno: "+ nomeAluno + ",\nCPF: "+cpfAluno+", \nSexo: "+sexoAluno+",\nData de Nascimento: "+dataNasc+",\nEstado Civil: "+estadoCivil+",\nEndereço: "+endereco+",\nBairro: "+bairro+",\nCidade: "+cidade+",\nTelefone: "+telefone+",\nCurso: "+curso+",\nTurma: "+turma, "Cadastro realizado com sucesso.", 1);
+		}
+	}
+	
+	public static void consultarAluno(){
+		String cpfConsulta = JOptionPane.showInputDialog("Digite o cpf do aluno:");
+		AlunoCadastro alunoConsulta = new AlunoCadastro().recuperaAluno(cpfConsulta);
+		if (alunoConsulta == null){
+			JOptionPane.showMessageDialog(null,"Aluno não cadastrado!","Erro:",1);
+		} else {
+			JOptionPane.showMessageDialog(null, "Aluno: "+ alunoConsulta.getNomeAluno() + ",\nCPF: "+alunoConsulta.getCpfAluno()+", \nSexo: "+alunoConsulta.getSexoAluno()+",\nData de Nascimento: "+alunoConsulta.getDataNasc()+",\nEstado Civil: "+alunoConsulta.getEstadoCivil()+",\nEndereço: "+alunoConsulta.getEndereco()+",\nBairro: "+alunoConsulta.getBairro()+",\nCidade: "+alunoConsulta.getCidade()+",\nTelefone: "+alunoConsulta.getTelefone()+",\nCurso: "+alunoConsulta.getCurso()+",\nTurno: "+alunoConsulta.getTurma()+",\nCursos já realizados aqui: "+alunoConsulta.getQuaisCursos(), "Aluno encontrado!", 1);
 		}
 	}
 
