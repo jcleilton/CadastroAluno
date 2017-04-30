@@ -31,7 +31,7 @@ public class Form{
 	private static String telefone;
 
 	private static String curso;
-	private static String turma;
+	private static String turno;
 	private static int quantosCursos;
 	private static String quaisCursos;
 	private static String quandoFez;
@@ -108,13 +108,13 @@ public class Form{
 
 		JTextField textFieldCurso = new JTextField(9);
 
-		JLabel labelTurma = new JLabel("Turma:");
+		JLabel labelTurma = new JLabel("Turno:");
 
-		JComboBox<String> combTurma = new JComboBox<String>();
-		combTurma.addItem("Manhã");
-		combTurma.addItem("Tarde");
-		combTurma.setEditable(false);
-		combTurma.setSelectedIndex(0);
+		JComboBox<String> combTurno = new JComboBox<String>();
+		combTurno.addItem("Manhã");
+		combTurno.addItem("Tarde");
+		combTurno.setEditable(false);
+		combTurno.setSelectedIndex(0);
 
 
 		JLabel labelFezCurso = new JLabel("Se fez curso na UTD?: ");
@@ -176,7 +176,7 @@ public class Form{
 				cidade = textFieldCidade.getText();
 				telefone = textFieldTelefone.getText();
 				curso = textFieldCurso.getText();
-				turma = combTurma.getSelectedItem().toString();
+				turno = combTurno.getSelectedItem().toString();
 				if (fezCursoUtd){
 					try{
 						quantosCursos = Integer.parseInt(textFieldQuantos.getText());
@@ -358,7 +358,7 @@ public class Form{
 		c.weighty = 0;
 		c.gridwidth = 1;
 		c.gridy = 12;
-		panel.add(combTurma,c);
+		panel.add(combTurno,c);
 
 		c.gridx = 0;
 		c.weightx = 0;
@@ -439,7 +439,7 @@ public class Form{
 	public static void cadastrarAluno(){
 		if (fezCursoUtd){
 			if (quantosCursos <= 0){
-				if (nomeAluno.equals("") || cpfAluno.equals("") || dataNasc.equals("") || endereco.equals("") || bairro.equals("") || cidade.equals("") || telefone.equals("") || curso.equals("")  || turma.equals("")){
+				if (nomeAluno.equals("") || cpfAluno.equals("") || dataNasc.equals("") || endereco.equals("") || bairro.equals("") || cidade.equals("") || telefone.equals("") || curso.equals("")  || turno.equals("")){
 					JOptionPane.showMessageDialog(null,"Erro na entrada dos dados, verifique se há algum campo em branco!","Erro:",1);
 
 				} else {
@@ -449,19 +449,19 @@ public class Form{
 						System.out.println(e);
 					}
 					@SuppressWarnings("unused")
-					dados.AlunoCadastro aluno = new dados.AlunoCadastro(fezCursoUtd, nomeAluno, cpfAluno, sexoAluno, dataNasc, estadoCivil, endereco, bairro, cidade, telefone, curso, turma, quantosCursos, quaisCursos, quandoFez);
-					JOptionPane.showMessageDialog(null, "Aluno: "+ nomeAluno + ",\nCPF: "+cpfAluno+", \nSexo: "+sexoAluno+",\nData de Nascimento: "+dataNasc+",\nEstado Civil: "+estadoCivil+",\nEndereço: "+endereco+",\nBairro: "+bairro+",\nCidade: "+cidade+",\nTelefone: "+telefone+",\nCurso: "+curso+",\nTurma: "+turma+",\nCursos já realizados aqui: "+quaisCursos, "Cadastro realizado com sucesso.", 1);
+					dados.AlunoCadastro aluno = new dados.AlunoCadastro(fezCursoUtd, nomeAluno, cpfAluno, sexoAluno, dataNasc, estadoCivil, endereco, bairro, cidade, telefone, curso, turno, quantosCursos, quaisCursos, quandoFez);
+					JOptionPane.showMessageDialog(null, "Aluno: "+ nomeAluno + ",\nCPF: "+cpfAluno+", \nSexo: "+sexoAluno+",\nData de Nascimento: "+dataNasc+",\nEstado Civil: "+estadoCivil+",\nEndereço: "+endereco+",\nBairro: "+bairro+",\nCidade: "+cidade+",\nTelefone: "+telefone+",\nCurso: "+curso+",\nTurma: "+turno+",\nCursos já realizados aqui: "+quaisCursos, "Cadastro realizado com sucesso.", 1);
 				}
 				
 			}		
 		} else if (quantosCursos <= 0){
-			if (nomeAluno.equals("") || cpfAluno.equals("") || dataNasc.equals("") || endereco.equals("") || bairro.equals("") || cidade.equals("") || telefone.equals("") || curso.equals("")  || turma.equals("")){
+			if (nomeAluno.equals("") || cpfAluno.equals("") || dataNasc.equals("") || endereco.equals("") || bairro.equals("") || cidade.equals("") || telefone.equals("") || curso.equals("")  || turno.equals("")){
 				JOptionPane.showMessageDialog(null,"Erro na entrada dos dados, verifique se há algum campo em branco!","Erro:",1);
 
 			} else {
 				@SuppressWarnings("unused")
-				dados.AlunoCadastro aluno = new dados.AlunoCadastro(fezCursoUtd, nomeAluno, cpfAluno, sexoAluno, dataNasc, estadoCivil, endereco, bairro, cidade, telefone, curso, turma, 0, "", "");
-				JOptionPane.showMessageDialog(null, "Aluno: "+ nomeAluno + ",\nCPF: "+cpfAluno+", \nSexo: "+sexoAluno+",\nData de Nascimento: "+dataNasc+",\nEstado Civil: "+estadoCivil+",\nEndereço: "+endereco+",\nBairro: "+bairro+",\nCidade: "+cidade+",\nTelefone: "+telefone+",\nCurso: "+curso+",\nTurma: "+turma, "Cadastro realizado com sucesso.", 1);
+				dados.AlunoCadastro aluno = new dados.AlunoCadastro(fezCursoUtd, nomeAluno, cpfAluno, sexoAluno, dataNasc, estadoCivil, endereco, bairro, cidade, telefone, curso, turno, 0, "", "");
+				JOptionPane.showMessageDialog(null, "Aluno: "+ nomeAluno + ",\nCPF: "+cpfAluno+", \nSexo: "+sexoAluno+",\nData de Nascimento: "+dataNasc+",\nEstado Civil: "+estadoCivil+",\nEndereço: "+endereco+",\nBairro: "+bairro+",\nCidade: "+cidade+",\nTelefone: "+telefone+",\nCurso: "+curso+",\nTurma: "+turno, "Cadastro realizado com sucesso.", 1);
 			}
 		}
 	}
@@ -472,7 +472,7 @@ public class Form{
 		if (alunoConsulta == null){
 			JOptionPane.showMessageDialog(null,"Aluno não cadastrado!","Erro:",1);
 		} else {
-			JOptionPane.showMessageDialog(null, "Aluno: "+ alunoConsulta.getNomeAluno() + ",\nCPF: "+alunoConsulta.getCpfAluno()+", \nSexo: "+alunoConsulta.getSexoAluno()+",\nData de Nascimento: "+alunoConsulta.getDataNasc()+",\nEstado Civil: "+alunoConsulta.getEstadoCivil()+",\nEndereço: "+alunoConsulta.getEndereco()+",\nBairro: "+alunoConsulta.getBairro()+",\nCidade: "+alunoConsulta.getCidade()+",\nTelefone: "+alunoConsulta.getTelefone()+",\nCurso: "+alunoConsulta.getCurso()+",\nTurno: "+alunoConsulta.getTurma()+",\nCursos já realizados aqui: "+alunoConsulta.getQuaisCursos(), "Aluno encontrado!", 1);
+			JOptionPane.showMessageDialog(null, "Aluno: "+ alunoConsulta.getNomeAluno() + ",\nCPF: "+alunoConsulta.getCpfAluno()+", \nSexo: "+alunoConsulta.getSexoAluno()+",\nData de Nascimento: "+alunoConsulta.getDataNasc()+",\nEstado Civil: "+alunoConsulta.getEstadoCivil()+",\nEndereço: "+alunoConsulta.getEndereco()+",\nBairro: "+alunoConsulta.getBairro()+",\nCidade: "+alunoConsulta.getCidade()+",\nTelefone: "+alunoConsulta.getTelefone()+",\nCurso: "+alunoConsulta.getCurso()+",\nTurno: "+alunoConsulta.getTurno()+",\nCursos já realizados aqui: "+alunoConsulta.getQuaisCursos(), "Aluno encontrado!", 1);
 		}
 	}
 

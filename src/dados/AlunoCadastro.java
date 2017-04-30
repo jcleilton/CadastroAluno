@@ -29,7 +29,7 @@ public class AlunoCadastro {
 	private String cidade;
 	private String telefone;
 	private String curso;
-	private String turma;
+	private String turno;
 	private int quantosCursos;
 	private String quaisCursos;
 	private String quandoFez;
@@ -54,7 +54,7 @@ public class AlunoCadastro {
 		this.cidade = cidade;
 		this.telefone = telefone;
 		this.curso = curso;
-		this.turma = turma;
+		this.turno = turma;
 		this.quantosCursos = quantosCursos;
 		this.quaisCursos = ""+quaisCursos;
 		this.quandoFez = ""+quandoFez;
@@ -93,7 +93,7 @@ public class AlunoCadastro {
 		bw.newLine();
 		bw.write(this.curso);
 		bw.newLine();
-		bw.write(this.turma);
+		bw.write(this.turno);
 		bw.newLine();
 		bw.write(""+this.quantosCursos);
 		bw.newLine();
@@ -118,7 +118,7 @@ public class AlunoCadastro {
 			alunoExistente.setCidade(br.readLine());
 			alunoExistente.setTelefone(br.readLine());
 			alunoExistente.setCurso(br.readLine());
-			alunoExistente.setTurma(br.readLine());
+			alunoExistente.setTurno(br.readLine());
 			alunoExistente.setQuantosCursos(Integer.parseInt(br.readLine()));
 			alunoExistente.setQuandoFez(br.readLine());
 			alunoExistente.setQuaisCursos(br.readLine());
@@ -235,12 +235,12 @@ public class AlunoCadastro {
 		this.curso = curso;
 	}
 
-	public String getTurma() {
-		return this.turma;
+	public String getTurno() {
+		return this.turno;
 	}
 
-	public void setTurma(String turma) {
-		this.turma = turma;
+	public void setTurno(String turma) {
+		this.turno = turma;
 	}
 
 	public int getQuantosCursos() {
@@ -272,7 +272,7 @@ public class AlunoCadastro {
 		return "AlunoCadastro [fezCursoUtd=" + fezCursoUtd + ", nomeAluno=" + nomeAluno + ", cpfAluno=" + cpfAluno
 				+ ", sexoAluno=" + sexoAluno + ", dataNasc=" + dataNasc + ", estadoCivil=" + estadoCivil + ", endereco="
 				+ endereco + ", bairro=" + bairro + ", cidade=" + cidade + ", telefone=" + telefone + ", curso=" + curso
-				+ ", turma=" + turma + ", quantosCursos=" + quantosCursos + ", quaisCursos=" + quaisCursos
+				+ ", turma=" + turno + ", quantosCursos=" + quantosCursos + ", quaisCursos=" + quaisCursos
 				+ ", quandoFez=" + quandoFez + "]";
 	}
 
