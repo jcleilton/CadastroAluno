@@ -6,6 +6,9 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.image.AreaAveragingScaleFilter;
 import java.text.ParseException;
 
 import javax.swing.JButton;
@@ -41,16 +44,19 @@ public class FormCadastroAluno{
 		fezCursoUtd = true;
 		javax.swing.text.MaskFormatter cpf = null;
 		javax.swing.text.MaskFormatter data = null;
-		javax.swing.text.MaskFormatter fone = null;
+		javax.swing.text.MaskFormatter foneCell = null;
+		
 		javax.swing.text.MaskFormatter semestre = null;
 		javax.swing.text.MaskFormatter inteiroDezena = null;
 		
 		try {
 			cpf= new javax.swing.text.MaskFormatter("###.###.###-##");
 			data= new javax.swing.text.MaskFormatter("##/##/####");
-			fone= new javax.swing.text.MaskFormatter("(##) #####-####");
+			foneCell= new javax.swing.text.MaskFormatter("###########");
+			
 			semestre= new javax.swing.text.MaskFormatter("####.#");
-			inteiroDezena = new javax.swing.text.MaskFormatter("##");
+			inteiroDezena = new javax.swing.text.MaskFormatter("#");
+			
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -118,8 +124,65 @@ public class FormCadastroAluno{
 
 		JLabel labelTelefone = new JLabel("Telefone: ");
 
-		JTextField textFieldTelefone = new javax.swing.JFormattedTextField(fone);
-		textFieldTelefone.setColumns(9);
+		JTextField textFieldTelefone = new JTextField(9);
+		textFieldTelefone.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				try{
+					@SuppressWarnings("unused")
+					int testeEntrada = Integer.parseInt(textFieldTelefone.getText());
+				}catch (Exception e1){
+					JOptionPane.showMessageDialog(null,"Erro na entrada dos dados: " + e1);
+					textFieldTelefone.requestFocus();
+				}
+				if(textFieldTelefone.getText().length() < 10 || textFieldTelefone.getText().length() > 11){
+					JOptionPane.showMessageDialog(null,"Digite apenas números com 10 ou 11 dígitos, incluindo o DDD!");
+					textFieldTelefone.requestFocus();
+				}
+					
+				
+				if (textFieldTelefone.getText().length() == 10){
+										
+					String text = "(";
+					for (int i = 0; i < 2; i++){
+						text += textFieldTelefone.getText().charAt(i);
+					}
+					text += ") ";
+					for (int i = 2; i < 6; i++){
+						text += textFieldTelefone.getText().charAt(i);
+					}
+					text += "-";
+					for (int i = 6; i < 10; i++){
+						text += textFieldTelefone.getText().charAt(i);
+					}
+					textFieldTelefone.setText(text);
+				} else if (textFieldTelefone.getText().length() == 11){
+					String text = "(";
+					for (int i = 0; i < 2; i++){
+						text += textFieldTelefone.getText().charAt(i);
+					}
+					text += ") ";
+					for (int i = 2; i < 7; i++){
+						text += textFieldTelefone.getText().charAt(i);
+					}
+					text += "-";
+					for (int i = 7; i < 11; i++){
+						text += textFieldTelefone.getText().charAt(i);
+					}
+					textFieldTelefone.setText(text);
+				} 
+				
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		
 
 		JLabel labelDC = new JLabel("Dados do Curso");
 		labelDC.setFont(new Font("Arial", Font.BOLD,30));
@@ -140,7 +203,8 @@ public class FormCadastroAluno{
 		JLabel labelFezCurso = new JLabel("Se fez curso na UTD?: ");
 
 		JTextField textFieldQuantos = new javax.swing.JFormattedTextField(inteiroDezena);
-		textFieldQuantos.setColumns(2);
+		
+		textFieldQuantos.setColumns(1);
 		
 
 		JLabel labelQuantos = new JLabel("Quantos?: ");
@@ -205,6 +269,7 @@ public class FormCadastroAluno{
 				turno = combTurno.getSelectedItem().toString();
 				if (fezCursoUtd){
 					try{
+						
 						quantosCursos = Integer.parseInt(textFieldQuantos.getText());
 					}catch (Exception except){
 						System.out.println(except);
@@ -482,15 +547,13 @@ public class FormCadastroAluno{
 					}
 				}while (quantosCursos <= 0);
 
-				@SuppressWarnings("unused")
 				dados.AlunoCadastro aluno = new dados.AlunoCadastro(fezCursoUtd, nomeAluno, cpfAluno, sexoAluno, dataNasc, estadoCivil, endereco, bairro, cidade, telefone, curso, turno, quantosCursos, quaisCursos, quandoFez);
-				JOptionPane.showMessageDialog(null, "Aluno: "+ nomeAluno + ",\nCPF: "+cpfAluno+", \nSexo: "+sexoAluno+",\nData de Nascimento: "+dataNasc+",\nEstado Civil: "+estadoCivil+",\nEndereço: "+endereco+",\nBairro: "+bairro+",\nCidade: "+cidade+",\nTelefone: "+telefone+",\nCurso: "+curso+",\nTurma: "+turno+",\nCursos já realizados aqui: "+quaisCursos, "Cadastro realizado com sucesso.", 1);
+				JOptionPane.showMessageDialog(null, aluno, "Cadastro realizado com sucesso.", 1);
 
 			} else
 			{
-				@SuppressWarnings("unused")
 				dados.AlunoCadastro aluno = new dados.AlunoCadastro(fezCursoUtd, nomeAluno, cpfAluno, sexoAluno, dataNasc, estadoCivil, endereco, bairro, cidade, telefone, curso, turno, quantosCursos, quaisCursos, quandoFez);
-				JOptionPane.showMessageDialog(null, "Aluno: "+ nomeAluno + ",\nCPF: "+cpfAluno+", \nSexo: "+sexoAluno+",\nData de Nascimento: "+dataNasc+",\nEstado Civil: "+estadoCivil+",\nEndereço: "+endereco+",\nBairro: "+bairro+",\nCidade: "+cidade+",\nTelefone: "+telefone+",\nCurso: "+curso+",\nTurma: "+turno+",\nCursos já realizados aqui: "+quaisCursos, "Cadastro realizado com sucesso.", 1);					
+				JOptionPane.showMessageDialog(null, aluno, "Cadastro realizado com sucesso.", 1);
 			}
 
 		} else
@@ -501,9 +564,8 @@ public class FormCadastroAluno{
 
 			} else 
 			{
-				@SuppressWarnings("unused")
 				dados.AlunoCadastro aluno = new dados.AlunoCadastro(fezCursoUtd, nomeAluno, cpfAluno, sexoAluno, dataNasc, estadoCivil, endereco, bairro, cidade, telefone, curso, turno, 0, "", "");
-				JOptionPane.showMessageDialog(null, "Aluno: "+ nomeAluno + ",\nCPF: "+cpfAluno+", \nSexo: "+sexoAluno+",\nData de Nascimento: "+dataNasc+",\nEstado Civil: "+estadoCivil+",\nEndereço: "+endereco+",\nBairro: "+bairro+",\nCidade: "+cidade+",\nTelefone: "+telefone+",\nCurso: "+curso+",\nTurma: "+turno, "Cadastro realizado com sucesso.", 1);
+				JOptionPane.showMessageDialog(null, aluno, "Cadastro realizado com sucesso.", 1);
 			}
 		}
 	}
@@ -515,7 +577,7 @@ public class FormCadastroAluno{
 		if (alunoConsulta == null){
 			JOptionPane.showMessageDialog(null,"Aluno não cadastrado!","Erro:",1);
 		} else {
-			JOptionPane.showMessageDialog(null, "Aluno: "+ alunoConsulta.getNomeAluno() + ",\nCPF: "+alunoConsulta.getCpfAluno()+", \nSexo: "+alunoConsulta.getSexoAluno()+",\nData de Nascimento: "+alunoConsulta.getDataNasc()+",\nEstado Civil: "+alunoConsulta.getEstadoCivil()+",\nEndereço: "+alunoConsulta.getEndereco()+",\nBairro: "+alunoConsulta.getBairro()+",\nCidade: "+alunoConsulta.getCidade()+",\nTelefone: "+alunoConsulta.getTelefone()+",\nCurso: "+alunoConsulta.getCurso()+",\nTurno: "+alunoConsulta.getTurno()+",\nCursos já realizados aqui: "+alunoConsulta.getQuaisCursos(), "Aluno encontrado!", 1);
+			JOptionPane.showMessageDialog(null, alunoConsulta, "Cadastro realizado com sucesso.", 1);
 		}
 	}
 

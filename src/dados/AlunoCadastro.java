@@ -42,7 +42,7 @@ public class AlunoCadastro {
 		
 	}
 	
-	public AlunoCadastro(boolean fezCursoUtd,String nomeAluno,String cpfAluno,String sexoAluno,String dataNasc,String estadoCivil,String endereco,String bairro,String cidade,String telefone,String curso,String turma,int quantosCursos, String quaisCursos,String quandoFez) {
+	public AlunoCadastro(boolean fezCursoUtd,String nomeAluno,String cpfAluno,String sexoAluno,String dataNasc,String estadoCivil,String endereco,String bairro,String cidade,String telefone,String curso,String turno,int quantosCursos, String quaisCursos,String quandoFez) {
 		this.fezCursoUtd = fezCursoUtd;
 		this.nomeAluno = nomeAluno;
 		this.cpfAluno = cpfAluno;
@@ -54,7 +54,7 @@ public class AlunoCadastro {
 		this.cidade = cidade;
 		this.telefone = telefone;
 		this.curso = curso;
-		this.turno = turma;
+		this.turno = turno;
 		this.quantosCursos = quantosCursos;
 		this.quaisCursos = ""+quaisCursos;
 		this.quandoFez = ""+quandoFez;
@@ -97,6 +97,8 @@ public class AlunoCadastro {
 		bw.newLine();
 		bw.write(""+this.quantosCursos);
 		bw.newLine();
+		bw.write(""+this.quaisCursos);
+		bw.newLine();
 		bw.write(this.quandoFez);
 		bw.newLine();
 		bw.close();
@@ -120,8 +122,9 @@ public class AlunoCadastro {
 			alunoExistente.setCurso(br.readLine());
 			alunoExistente.setTurno(br.readLine());
 			alunoExistente.setQuantosCursos(Integer.parseInt(br.readLine()));
-			alunoExistente.setQuandoFez(br.readLine());
 			alunoExistente.setQuaisCursos(br.readLine());
+			alunoExistente.setQuandoFez(br.readLine());
+			
 			br.close();
 			System.out.println(alunoExistente);
 			return true;
@@ -269,11 +272,11 @@ public class AlunoCadastro {
 
 	@Override
 	public String toString() {
-		return "AlunoCadastro [fezCursoUtd=" + fezCursoUtd + ", nomeAluno=" + nomeAluno + ", cpfAluno=" + cpfAluno
-				+ ", sexoAluno=" + sexoAluno + ", dataNasc=" + dataNasc + ", estadoCivil=" + estadoCivil + ", endereco="
-				+ endereco + ", bairro=" + bairro + ", cidade=" + cidade + ", telefone=" + telefone + ", curso=" + curso
-				+ ", turma=" + turno + ", quantosCursos=" + quantosCursos + ", quaisCursos=" + quaisCursos
-				+ ", quandoFez=" + quandoFez + "]";
+		return "Aluno:\n - já fez curso na UTD = " + (fezCursoUtd? "Sim" : "Não") + ",\n - Nome = " + nomeAluno + ",\n - CPF = " + cpfAluno
+				+ ",\n - Sexo = " + sexoAluno + ",\n - Data de nascimento = " + dataNasc + ",\n - Estado civil = " + estadoCivil + ",\n - Endereco = "
+				+ endereco + ",\n - Bairro = " + bairro + ",\n - Cidade = " + cidade + ",\n - Telefone = " + telefone + ",\n - Curso = " + curso
+				+ ",\n - Turno = " + turno + (fezCursoUtd? (",\n - Quantos = " + quantosCursos + ",\n - Quais = " + quaisCursos
+				+ ",\n - Quando fez = " + quandoFez + ".") : "");
 	}
 
 	
