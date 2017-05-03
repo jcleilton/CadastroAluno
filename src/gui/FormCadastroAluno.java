@@ -43,11 +43,14 @@ public class FormCadastroAluno{
 		javax.swing.text.MaskFormatter data = null;
 		javax.swing.text.MaskFormatter fone = null;
 		javax.swing.text.MaskFormatter semestre = null;
+		javax.swing.text.MaskFormatter inteiroDezena = null;
+		
 		try {
 			cpf= new javax.swing.text.MaskFormatter("###.###.###-##");
 			data= new javax.swing.text.MaskFormatter("##/##/####");
 			fone= new javax.swing.text.MaskFormatter("(##) #####-####");
 			semestre= new javax.swing.text.MaskFormatter("####.#");
+			inteiroDezena = new javax.swing.text.MaskFormatter("##");
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -136,7 +139,9 @@ public class FormCadastroAluno{
 
 		JLabel labelFezCurso = new JLabel("Se fez curso na UTD?: ");
 
-		JTextField textFieldQuantos = new JTextField(3);
+		JTextField textFieldQuantos = new javax.swing.JFormattedTextField(inteiroDezena);
+		textFieldQuantos.setColumns(2);
+		
 
 		JLabel labelQuantos = new JLabel("Quantos?: ");
 
