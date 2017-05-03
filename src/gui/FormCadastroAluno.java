@@ -177,10 +177,10 @@ public class FormCadastroAluno{
 					fezCursoUtd = true;
 				}
 			}
-			
+
 		});
-		
-		
+
+
 
 		JButton button1 = new JButton("Cadastrar");
 		button1.setBounds(100, 100, 400, 300);
@@ -458,34 +458,51 @@ public class FormCadastroAluno{
 	//*******      Métodos que implementam ações do botão 'Cadastrar'     *******
 
 	public static void cadastrarAluno(){
-		if (fezCursoUtd){
-			if (quantosCursos <= 0){
-				if (nomeAluno.equals("") || cpfAluno.equals("") || dataNasc.equals("") || endereco.equals("") || bairro.equals("") || cidade.equals("") || telefone.equals("") || curso.equals("")  || turno.equals("")){
-					JOptionPane.showMessageDialog(null,"Erro na entrada dos dados, verifique se há algum campo em branco!","Erro:",1);
-
-				} else {
-					try{
-						quantosCursos = Integer.parseInt(JOptionPane.showInputDialog("Erro na entrada de dados: Digite um número válido."));
-					}catch (Exception e){
-						System.out.println(e);
-					}
-					@SuppressWarnings("unused")
-					dados.AlunoCadastro aluno = new dados.AlunoCadastro(fezCursoUtd, nomeAluno, cpfAluno, sexoAluno, dataNasc, estadoCivil, endereco, bairro, cidade, telefone, curso, turno, quantosCursos, quaisCursos, quandoFez);
-					JOptionPane.showMessageDialog(null, "Aluno: "+ nomeAluno + ",\nCPF: "+cpfAluno+", \nSexo: "+sexoAluno+",\nData de Nascimento: "+dataNasc+",\nEstado Civil: "+estadoCivil+",\nEndereço: "+endereco+",\nBairro: "+bairro+",\nCidade: "+cidade+",\nTelefone: "+telefone+",\nCurso: "+curso+",\nTurma: "+turno+",\nCursos já realizados aqui: "+quaisCursos, "Cadastro realizado com sucesso.", 1);
-				}
-				
-			}		
-		} else if (quantosCursos <= 0){
-			if (nomeAluno.equals("") || cpfAluno.equals("") || dataNasc.equals("") || endereco.equals("") || bairro.equals("") || cidade.equals("") || telefone.equals("") || curso.equals("")  || turno.equals("")){
+		if (fezCursoUtd)
+		{
+			if (nomeAluno.equals("") || cpfAluno.equals("") || dataNasc.equals("") || endereco.equals("") || bairro.equals("") || cidade.equals("") || telefone.equals("") || curso.equals("")  || turno.equals(""))
+			{
 				JOptionPane.showMessageDialog(null,"Erro na entrada dos dados, verifique se há algum campo em branco!","Erro:",1);
 
-			} else {
+			} else if (quantosCursos <= 0)
+			{
+				do
+				{
+					try
+					{
+						quantosCursos = Integer.parseInt(JOptionPane.showInputDialog("Erro na entrada de dados: Digite um número válido."));
+					}catch (Exception e)
+					{
+						System.out.println(e);
+					}
+				}while (quantosCursos <= 0);
+
+				@SuppressWarnings("unused")
+				dados.AlunoCadastro aluno = new dados.AlunoCadastro(fezCursoUtd, nomeAluno, cpfAluno, sexoAluno, dataNasc, estadoCivil, endereco, bairro, cidade, telefone, curso, turno, quantosCursos, quaisCursos, quandoFez);
+				JOptionPane.showMessageDialog(null, "Aluno: "+ nomeAluno + ",\nCPF: "+cpfAluno+", \nSexo: "+sexoAluno+",\nData de Nascimento: "+dataNasc+",\nEstado Civil: "+estadoCivil+",\nEndereço: "+endereco+",\nBairro: "+bairro+",\nCidade: "+cidade+",\nTelefone: "+telefone+",\nCurso: "+curso+",\nTurma: "+turno+",\nCursos já realizados aqui: "+quaisCursos, "Cadastro realizado com sucesso.", 1);
+
+			} else
+			{
+				@SuppressWarnings("unused")
+				dados.AlunoCadastro aluno = new dados.AlunoCadastro(fezCursoUtd, nomeAluno, cpfAluno, sexoAluno, dataNasc, estadoCivil, endereco, bairro, cidade, telefone, curso, turno, quantosCursos, quaisCursos, quandoFez);
+				JOptionPane.showMessageDialog(null, "Aluno: "+ nomeAluno + ",\nCPF: "+cpfAluno+", \nSexo: "+sexoAluno+",\nData de Nascimento: "+dataNasc+",\nEstado Civil: "+estadoCivil+",\nEndereço: "+endereco+",\nBairro: "+bairro+",\nCidade: "+cidade+",\nTelefone: "+telefone+",\nCurso: "+curso+",\nTurma: "+turno+",\nCursos já realizados aqui: "+quaisCursos, "Cadastro realizado com sucesso.", 1);					
+			}
+
+		} else
+		{
+			if (nomeAluno.equals("") || cpfAluno.equals("") || dataNasc.equals("") || endereco.equals("") || bairro.equals("") || cidade.equals("") || telefone.equals("") || curso.equals("")  || turno.equals(""))
+			{
+				JOptionPane.showMessageDialog(null,"Erro na entrada dos dados, verifique se há algum campo em branco!","Erro:",1);
+
+			} else 
+			{
 				@SuppressWarnings("unused")
 				dados.AlunoCadastro aluno = new dados.AlunoCadastro(fezCursoUtd, nomeAluno, cpfAluno, sexoAluno, dataNasc, estadoCivil, endereco, bairro, cidade, telefone, curso, turno, 0, "", "");
 				JOptionPane.showMessageDialog(null, "Aluno: "+ nomeAluno + ",\nCPF: "+cpfAluno+", \nSexo: "+sexoAluno+",\nData de Nascimento: "+dataNasc+",\nEstado Civil: "+estadoCivil+",\nEndereço: "+endereco+",\nBairro: "+bairro+",\nCidade: "+cidade+",\nTelefone: "+telefone+",\nCurso: "+curso+",\nTurma: "+turno, "Cadastro realizado com sucesso.", 1);
 			}
 		}
 	}
+
 
 	public static void consultarAluno(){
 		String cpfConsulta = JOptionPane.showInputDialog("Digite o cpf do aluno:");
