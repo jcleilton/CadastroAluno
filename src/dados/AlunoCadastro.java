@@ -3,15 +3,8 @@
  */
 package dados;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+import consultas.AlunoDAO;
 
 /**
  * @author jcleilton
@@ -33,15 +26,16 @@ public class AlunoCadastro {
 	private int quantosCursos;
 	private String quaisCursos;
 	private String quandoFez;
+	private int matricula;
 
 	/**
 	 * 
 	 */
-	
+
 	public AlunoCadastro(){
-		
+
 	}
-	
+
 	public AlunoCadastro(boolean fezCursoUtd,String nomeAluno,String cpfAluno,String sexoAluno,String dataNasc,String estadoCivil,String endereco,String bairro,String cidade,String telefone,String curso,String turno,int quantosCursos, String quaisCursos,String quandoFez) {
 		this.fezCursoUtd = fezCursoUtd;
 		this.nomeAluno = nomeAluno;
@@ -63,89 +57,34 @@ public class AlunoCadastro {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("Erro ao salvar aluno "+this.nomeAluno+"!\n"+e);
 		}
 	}
-	
+
 	private void salvaAluno() throws IOException{
-		OutputStream os = new FileOutputStream(this.cpfAluno+".txt");
-		OutputStreamWriter osw = new OutputStreamWriter(os);
-		BufferedWriter bw = new BufferedWriter(osw);
-		bw.write(""+this.fezCursoUtd);
-		bw.newLine();
-		bw.write(this.nomeAluno);
-		bw.newLine();
-		bw.write(this.cpfAluno);
-		bw.newLine();
-		bw.write(this.sexoAluno);
-		bw.newLine();
-		bw.write(this.dataNasc);
-		bw.newLine();
-		bw.write(this.estadoCivil);
-		bw.newLine();
-		bw.write(this.endereco);
-		bw.newLine();
-		bw.write(this.bairro);
-		bw.newLine();
-		bw.write(this.cidade);
-		bw.newLine();
-		bw.write(this.telefone);
-		bw.newLine();
-		bw.write(this.curso);
-		bw.newLine();
-		bw.write(this.turno);
-		bw.newLine();
-		bw.write(""+this.quantosCursos);
-		bw.newLine();
-		bw.write(""+this.quaisCursos);
-		bw.newLine();
-		bw.write(this.quandoFez);
-		bw.newLine();
-		bw.close();
+		AlunoDAO.salvar(this);
+		this.matricula = AlunoDAO.getMatricula(this.getCpfAluno());
 	}
-	public boolean existeAluno(String cpf){
-		try{
-			InputStream is = new FileInputStream(cpf+".txt");
-			InputStreamReader isr = new InputStreamReader(is);
-			BufferedReader br = new BufferedReader(isr);
-			AlunoCadastro alunoExistente = new AlunoCadastro();
-			alunoExistente.setFezCursoUtd(Boolean.parseBoolean(br.readLine()));
-			alunoExistente.setNomeAluno(br.readLine());
-			alunoExistente.setCpfAluno(br.readLine());
-			alunoExistente.setSexoAluno(br.readLine());
-			alunoExistente.setDataNasc(br.readLine());
-			alunoExistente.setEstadoCivil(br.readLine());
-			alunoExistente.setEndereco(br.readLine());
-			alunoExistente.setBairro(br.readLine());
-			alunoExistente.setCidade(br.readLine());
-			alunoExistente.setTelefone(br.readLine());
-			alunoExistente.setCurso(br.readLine());
-			alunoExistente.setTurno(br.readLine());
-			alunoExistente.setQuantosCursos(Integer.parseInt(br.readLine()));
-			alunoExistente.setQuaisCursos(br.readLine());
-			alunoExistente.setQuandoFez(br.readLine());
-			
-			br.close();
-			System.out.println(alunoExistente);
+
+	public static boolean deletaAluno(String cpf) throws IOException{
+		if (new AlunoCadastro().existeAluno(cpf)){
+			AlunoDAO.delete(cpf);
 			return true;
-		}catch (Exception e){
+		} else {
 			return false;
 		}
+
 	}
-	
+
+	public boolean existeAluno(String cpf){
+		if (AlunoDAO.existe(cpf)){
+			return true;
+		}
+		return false;
+	}
+
 	public AlunoCadastro recuperaAluno(String cpf){
 		if (this.existeAluno(cpf)){
-			try{
-				InputStream is = new FileInputStream(cpf+".txt");
-				InputStreamReader isr = new InputStreamReader(is);
-				BufferedReader br = new BufferedReader(isr);
-				AlunoCadastro alunoExistente = new AlunoCadastro(Boolean.parseBoolean(br.readLine()),br.readLine(),br.readLine(),br.readLine(),br.readLine(),br.readLine(),br.readLine(),br.readLine(),br.readLine(),br.readLine(),br.readLine(),br.readLine(),Integer.parseInt(br.readLine()),br.readLine(),br.readLine());
-				br.close();
-				return alunoExistente;
-			}catch (IOException e){
-				System.out.println("Erro: "+e);
-				return null;
-			}
+			return AlunoDAO.recupera(cpf);
 		}
 		return null;
 	}
@@ -270,16 +209,26 @@ public class AlunoCadastro {
 		this.quandoFez = quandoFez;
 	}
 
+
+
+	public int getMatricula() {
+		return matricula;
+	}
+
+	public void setMatricula(int matricula) {
+		this.matricula = matricula;
+	}
+
 	@Override
 	public String toString() {
-		return "Aluno:\n - já fez curso na UTD = " + (fezCursoUtd? "Sim" : "Não") + ",\n - Nome = " + nomeAluno + ",\n - CPF = " + cpfAluno
+		return "Aluno:\n - já fez curso na UTD = " + (fezCursoUtd? "Sim" : "Não") + ",\n - Matrícula: "+matricula+ ",\n - Nome = " + nomeAluno + ",\n - CPF = " + cpfAluno
 				+ ",\n - Sexo = " + sexoAluno + ",\n - Data de nascimento = " + dataNasc + ",\n - Estado civil = " + estadoCivil + ",\n - Endereco = "
 				+ endereco + ",\n - Bairro = " + bairro + ",\n - Cidade = " + cidade + ",\n - Telefone = " + telefone + ",\n - Curso = " + curso
 				+ ",\n - Turno = " + turno + (fezCursoUtd? (",\n - Quantos = " + quantosCursos + ",\n - Quais = " + quaisCursos
-				+ ",\n - Quando fez = " + quandoFez + ".") : "");
+						+ ",\n - Quando fez = " + quandoFez + ".") : "");
 	}
 
-	
+
 
 
 }

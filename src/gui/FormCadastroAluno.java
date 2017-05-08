@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.image.AreaAveragingScaleFilter;
+import java.io.IOException;
 import java.text.ParseException;
 
 import javax.swing.JButton;
@@ -44,19 +44,15 @@ public class FormCadastroAluno{
 		fezCursoUtd = true;
 		javax.swing.text.MaskFormatter cpf = null;
 		javax.swing.text.MaskFormatter data = null;
-		javax.swing.text.MaskFormatter foneCell = null;
-		
 		javax.swing.text.MaskFormatter semestre = null;
 		javax.swing.text.MaskFormatter inteiroDezena = null;
-		
+
 		try {
 			cpf= new javax.swing.text.MaskFormatter("###.###.###-##");
 			data= new javax.swing.text.MaskFormatter("##/##/####");
-			foneCell= new javax.swing.text.MaskFormatter("###########");
-			
 			semestre= new javax.swing.text.MaskFormatter("####.#");
 			inteiroDezena = new javax.swing.text.MaskFormatter("#");
-			
+
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -126,24 +122,32 @@ public class FormCadastroAluno{
 
 		JTextField textFieldTelefone = new JTextField(9);
 		textFieldTelefone.addFocusListener(new FocusListener() {
-			
+
 			@Override
 			public void focusLost(FocusEvent e) {
-				try{
-					@SuppressWarnings("unused")
-					int testeEntrada = Integer.parseInt(textFieldTelefone.getText());
-				}catch (Exception e1){
-					JOptionPane.showMessageDialog(null,"Erro na entrada dos dados: " + e1);
-					textFieldTelefone.requestFocus();
-				}
-				if(textFieldTelefone.getText().length() < 10 || textFieldTelefone.getText().length() > 11){
+
+				if(textFieldTelefone.getText().length() < 10 || textFieldTelefone.getText().length() > 15){
 					JOptionPane.showMessageDialog(null,"Digite apenas números com 10 ou 11 dígitos, incluindo o DDD!");
 					textFieldTelefone.requestFocus();
-				}
+				} else {
+					int counter = 0;
+					for (int i = 0; i <textFieldTelefone.getText().length();i++){
+						if (Character.isDigit(textFieldTelefone.getText().charAt(i)) || Character.isSpaceChar(textFieldTelefone.getText().charAt(i)) || textFieldTelefone.getText().charAt(i) == '(' || textFieldTelefone.getText().charAt(i) == ')' || textFieldTelefone.getText().charAt(i) == '-'){
+							counter++;
+						}
+						
+					}
+					if (textFieldTelefone.getText().length() != counter){
+						JOptionPane.showMessageDialog(null,"Digite apenas números ou como segue o modelo: (NN) NNNNN-NNNN");
+						textFieldTelefone.setText("");
+						textFieldTelefone.requestFocus();
+					}
 					
-				
+				}
+
+
 				if (textFieldTelefone.getText().length() == 10){
-										
+
 					String text = "(";
 					for (int i = 0; i < 2; i++){
 						text += textFieldTelefone.getText().charAt(i);
@@ -172,17 +176,17 @@ public class FormCadastroAluno{
 					}
 					textFieldTelefone.setText(text);
 				} 
-				
+
 			}
-			
+
 			@Override
 			public void focusGained(FocusEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
-		
-		
+
+
 
 		JLabel labelDC = new JLabel("Dados do Curso");
 		labelDC.setFont(new Font("Arial", Font.BOLD,30));
@@ -203,9 +207,9 @@ public class FormCadastroAluno{
 		JLabel labelFezCurso = new JLabel("Se fez curso na UTD?: ");
 
 		JTextField textFieldQuantos = new javax.swing.JFormattedTextField(inteiroDezena);
-		
+
 		textFieldQuantos.setColumns(1);
-		
+
 
 		JLabel labelQuantos = new JLabel("Quantos?: ");
 
@@ -269,7 +273,7 @@ public class FormCadastroAluno{
 				turno = combTurno.getSelectedItem().toString();
 				if (fezCursoUtd){
 					try{
-						
+
 						quantosCursos = Integer.parseInt(textFieldQuantos.getText());
 					}catch (Exception except){
 						System.out.println(except);
@@ -301,6 +305,17 @@ public class FormCadastroAluno{
 			public void actionPerformed(ActionEvent e) {
 				consultarAluno();
 			}
+		});
+		
+		JButton button4 = new JButton("Delete");
+		button4.setBounds(200, 100, 400, 300);
+		button4.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				deletarAluno();
+			}
+
+			
 		});
 
 		GridBagConstraints c = new GridBagConstraints();
@@ -499,23 +514,29 @@ public class FormCadastroAluno{
 		c.gridy = 14;
 		panel.add(textFieldQuando,c);
 
-		c.gridx = 1;
+		c.gridx = 0;
 		c.weighty = 0;
 		c.gridwidth = 1;
 		c.gridy = 15;
 		panel.add(button1,c);
 
-		c.gridx = 2;
+		c.gridx = 1;
 		c.weighty = 0;
 		c.gridwidth = 1;
 		c.gridy = 15;
 		panel.add(button2,c);
 
-		c.gridx = 3;
+		c.gridx = 2;
 		c.weighty = 0;
 		c.gridwidth = 1;
 		c.gridy = 15;
 		panel.add(button3,c);
+		
+		c.gridx = 3;
+		c.weighty = 0;
+		c.gridwidth = 1;
+		c.gridy = 15;
+		panel.add(button4,c);
 
 		frame.setContentPane(panel);
 		frame.setVisible(true);
@@ -579,6 +600,23 @@ public class FormCadastroAluno{
 		} else {
 			JOptionPane.showMessageDialog(null, alunoConsulta, "Cadastro realizado com sucesso.", 1);
 		}
+	}
+	
+	private static void deletarAluno() {
+		String cpfConsulta = JOptionPane.showInputDialog("Digite o cpf do aluno:");
+		boolean teste = false;
+		try {
+			teste = AlunoCadastro.deletaAluno(cpfConsulta);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (!teste){
+			JOptionPane.showMessageDialog(null,"Aluno não cadastrado!","Erro:",1);
+		} else {
+			
+			JOptionPane.showMessageDialog(null,"Aluno deletado com sucesso.", "",1);
+		}		
 	}
 
 }
