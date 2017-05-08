@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import conexoes.Conexao;
 import conexoes.ConstantesBD;
 import dados.AlunoCadastro;
+import dados.Estrutura;
 
 
 /**
@@ -75,39 +76,30 @@ public class AlunoDAO extends ConstantesBD{
 		}	
 	}
 
-	//Precisa ser implementado para retornar uma arraylist.
-	public static AlunoCadastro alunosArrayList(){
-		sql = "SELECT * FROM "+TABELA;
+
+	public static Estrutura<AlunoCadastro> alunosArray(){
+		sql = "SELECT cpf FROM "+TABELA;
 		try {
-			AlunoCadastro aluno = new AlunoCadastro();
+			Estrutura<AlunoCadastro> estrutura = new Estrutura<>();
 			ps = Conexao.conecta().prepareStatement(sql);
 			rs = ps.executeQuery();
 			if (rs != null){
+				Estrutura<String> cpfString = new Estrutura<>();
 				while (rs.next())
 				{
-					aluno.setMatricula(rs.getInt("matricula"));
-					aluno.setFezCursoUtd(rs.getBoolean("fezCursoUtd"));
-					aluno.setQuantosCursos(rs.getInt("quantosCursos"));
-					aluno.setNomeAluno(rs.getString("nome"));
-					aluno.setCpfAluno(rs.getString("cpf"));
-					aluno.setSexoAluno(rs.getString("sexo"));
-					aluno.setDataNasc(rs.getString("dataNasc"));
-					aluno.setEstadoCivil(rs.getString("estadoCivil"));
-					aluno.setEndereco(rs.getString("endereco"));
-					aluno.setBairro(rs.getString("bairro"));
-					aluno.setCidade(rs.getString("cidade"));
-					aluno.setTelefone(rs.getString("telefone"));
-					aluno.setCurso(rs.getString("curso"));
-					aluno.setTurno(rs.getString("turno"));
-					aluno.setQuaisCursos(rs.getString("quaisCursos"));
-					aluno.setQuandoFez(rs.getString("quandoFez"));
+					cpfString.adiciona(rs.getString("cpf"));
 				}
 				rs.close();
 				ps.close();
+				while (!cpfString.estaVazia())
+				{
+					estrutura.adiciona(new AlunoCadastro().recuperaAluno(cpfString.apagaPrimeiroFila()));
+				}
+				
 			}else{
 				return null;
 			}
-			return aluno;
+			return estrutura;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;

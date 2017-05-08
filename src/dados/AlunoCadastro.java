@@ -88,6 +88,10 @@ public class AlunoCadastro {
 		}
 		return null;
 	}
+	
+	public static String listarAlunos(){
+		return AlunoDAO.alunosArray().toString();
+	}
 
 	public boolean isFezCursoUtd() {
 		return this.fezCursoUtd;

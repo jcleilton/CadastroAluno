@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import consultas.AlunoDAO;
 import dados.AlunoCadastro;
 
 public class FormCadastroAluno{
@@ -79,10 +80,26 @@ public class FormCadastroAluno{
 		JTextField textFieldNome = new JTextField(27);
 
 		JLabel labelCpf = new JLabel("CPF:");
-
 		JTextField textFieldCpf = new javax.swing.JFormattedTextField(cpf);
 		textFieldCpf.setColumns(9);
+		textFieldCpf.addFocusListener(new FocusListener() {
 
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (AlunoDAO.existe(textFieldCpf.getText())){
+					JOptionPane.showMessageDialog(null, "CPF já cadastrado!");
+					textFieldCpf.setText("");
+					textFieldCpf.requestFocus();
+				}
+
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 		JLabel labelSexo = new JLabel("Sexo:");
 
 		JComboBox<String> combSexo = new JComboBox<String>();
@@ -135,14 +152,14 @@ public class FormCadastroAluno{
 						if (Character.isDigit(textFieldTelefone.getText().charAt(i)) || Character.isSpaceChar(textFieldTelefone.getText().charAt(i)) || textFieldTelefone.getText().charAt(i) == '(' || textFieldTelefone.getText().charAt(i) == ')' || textFieldTelefone.getText().charAt(i) == '-'){
 							counter++;
 						}
-						
+
 					}
 					if (textFieldTelefone.getText().length() != counter){
 						JOptionPane.showMessageDialog(null,"Digite apenas números ou como segue o modelo: (NN) NNNNN-NNNN");
 						textFieldTelefone.setText("");
 						textFieldTelefone.requestFocus();
 					}
-					
+
 				}
 
 
@@ -306,7 +323,7 @@ public class FormCadastroAluno{
 				consultarAluno();
 			}
 		});
-		
+
 		JButton button4 = new JButton("Delete");
 		button4.setBounds(200, 100, 400, 300);
 		button4.addActionListener(new ActionListener() {
@@ -315,7 +332,7 @@ public class FormCadastroAluno{
 				deletarAluno();
 			}
 
-			
+
 		});
 
 		GridBagConstraints c = new GridBagConstraints();
@@ -531,7 +548,7 @@ public class FormCadastroAluno{
 		c.gridwidth = 1;
 		c.gridy = 15;
 		panel.add(button3,c);
-		
+
 		c.gridx = 3;
 		c.weighty = 0;
 		c.gridwidth = 1;
@@ -601,7 +618,7 @@ public class FormCadastroAluno{
 			JOptionPane.showMessageDialog(null, alunoConsulta, "Cadastro realizado com sucesso.", 1);
 		}
 	}
-	
+
 	private static void deletarAluno() {
 		String cpfConsulta = JOptionPane.showInputDialog("Digite o cpf do aluno:");
 		boolean teste = false;
@@ -614,7 +631,7 @@ public class FormCadastroAluno{
 		if (!teste){
 			JOptionPane.showMessageDialog(null,"Aluno não cadastrado!","Erro:",1);
 		} else {
-			
+
 			JOptionPane.showMessageDialog(null,"Aluno deletado com sucesso.", "",1);
 		}		
 	}
